@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Input Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Enter YouTube URL, Number of Videos, and Search Word</h1>
+        <form action="{{ url_for('results_page') }}" method="POST">
+            <input type="text" name="url" placeholder="Please enter URL" required>
+            <input type="number" name="num_videos" placeholder="Number of videos" required>
+            <input type="text" name="search_word" placeholder="Enter search word" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

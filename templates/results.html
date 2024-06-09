@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Results</h1>
+        <div class="grid-container">
+            {% for thumbnail in thumbnails %}
+                <div class="grid-item">
+                    <img src="{{ thumbnail }}" alt="Thumbnail">
+                </div>
+            {% endfor %}
+        </div>
+        <a href="{{ url_for('input_page') }}">Back</a>
+    </div>
+</body>
+</html>
