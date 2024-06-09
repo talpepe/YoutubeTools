@@ -47,7 +47,7 @@ class ApiTools:
         next_page_token = None
         ch_request = self.youtube.channels().list(
             part='contentDetails',
-            forUsername=channel_name,
+            forHandle=channel_name,
             maxResults=max_results,
             pageToken=next_page_token
         )
@@ -72,7 +72,12 @@ class ApiTools:
 
     @staticmethod
     def get_transcript_from_video_id(video_id):
-        return YouTubeTranscriptApi.get_transcript(video_id)
+        transcript = ""
+        try:
+            transcript = YouTubeTranscriptApi.get_transcript(video_id)
+        except:
+            print("Oops!  That was no valid number.  Try again...")
+        return transcript
 
     @staticmethod
     def get_word_occurrences_from_transcript(transcript, search_word):

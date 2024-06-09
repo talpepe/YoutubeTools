@@ -4,18 +4,127 @@
     <meta charset="UTF-8">
     <title>Results Page</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <style>
+        .thumbnail {
+            cursor: pointer;
+            margin: 10px;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            position: relative;
+            margin: auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 700px;
+            background-color: #fff;
+        }
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            font-size: 35px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .occurrence {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+        .occurrence:hover {
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Results</h1>
-        <div class="grid-container">
+        <div class="thumbnails">
             {% for thumbnail in thumbnails %}
-                <div class="grid-item">
-                    <img src="{{ thumbnail }}" alt="Thumbnail">
-                </div>
+                <img src="{{ thumbnail.url }}" class="thumbnail" data-video-id="{{ thumbnail.video_id }}">
             {% endfor %}
         </div>
-        <a href="{{ url_for('input_page') }}">Back</a>
     </div>
+
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="player"></div>
+            <div id="occurrences"></div>
+        </div>
+    </div>
+
+    <script>
+        var player;
+        var occurrences = [];
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '390',
+                width: '640',
+                videoId: '',
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready
+        }
+
+        $(document).ready(function() {
+            $(".thumbnail").click(function() {
+                var videoId = $(this).data("video-id");
+                $.ajax({
+                    url: "{{ url_for('get_occurrences') }}",
+                    type: "POST",
+                    data: JSON.stringify({ video_id: videoId }),
+                    contentType: "application/json",
+                    success: function(data) {
+                        occurrences = data.occurrences;
+                        var occurrencesHtml = '<ul>';
+                        occurrences.forEach(function(occurrence) {
+                            occurrencesHtml += '<li><a href="#" class="occurrence" data-time="' + occurrence.start_time + '">' + occurrence.text + '</a></li>';
+                        });
+                        occurrencesHtml += '</ul>';
+                        $("#occurrences").html(occurrencesHtml);
+                    }
+                });
+                player.loadVideoById(videoId);
+                $("#videoModal").show();
+            });
+
+            $(".close").click(function() {
+                $("#videoModal").hide();
+                player.stopVideo();
+            });
+
+            $(document).on("click", ".occurrence", function(event) {
+                event.preventDefault();
+                var time = $(this).data("time");
+                player.seekTo(time, true);
+            });
+        });
+    </script>
 </body>
 </html>
