@@ -24,9 +24,19 @@ def is_channel_url(url):
     return 'channel/' in url or 'user/' in url
 
 
-@app.route('/')
+@app.route('/input')
 def input_page():
     return render_template('input.html')
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/sphere_game')
+def sphere_game():
+    return render_template('sphere_game.html')
+
 
 
 @app.route('/results', methods=['POST'])
