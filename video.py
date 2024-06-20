@@ -5,8 +5,6 @@ class Video:
     def __init__(self, video_id, **kwargs):
         self.search_word_occurrences = []
         self.search_results = []
-        #for attr in ('video_id', 'search_word'):
-          #  setattr(self, attr, kwargs.get(attr))
         self.video_id = video_id
         self.transcript = None
 

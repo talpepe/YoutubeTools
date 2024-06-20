@@ -5,9 +5,6 @@ from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi
 
 
-# from api import youtube
-# api_key = 'AIzaSyDd9M7_UZ314rPpRmlnA0P4p9G5Usz_Gh8'
-
 
 class ApiTools:
     def __init__(self, api_key, **kwargs):
@@ -99,16 +96,8 @@ class ApiTools:
         return text.translate(str.maketrans('', '', string.punctuation))
 
 if __name__ == "__main__":
-    #tools = ApiTools('AIzaSyDd9M7_UZ314rPpRmlnA0P4p9G5Usz_Gh8', channelName='schafer5')
-    #tools = ApiTools('AIzaSyDd9M7_UZ314rPpRmlnA0P4p9G5Usz_Gh8', channelId='UCCezIgC97PvUuR4_gbFUs5g')
-    #tools.get_video_list_from_channel_id(15)
-    #ApiTools.get_word_occurances_from_transcript(ApiTools.get_transcript_from_video_id('jRAAaDll34Q'))
-    #print(ApiTools.get_transcript_from_video_id('jRAAaDll34Q'))
-
-    #print(ApiTools.get_word_occurrences_from_transcript(ApiTools.get_transcript_from_video_id('jRAAaDll34Q'), 'like'))
-
     from channel import Channel
-    #tool = ApiTools('AIzaSyDd9M7_UZ314rPpRmlnA0P4p9G5Usz_Gh8')
+
     channel1 = Channel(channel_name='schafer5', max_videos_num=3, search_word="hey")
     channel1.populate_video_list()
     channel1.search_for_word()

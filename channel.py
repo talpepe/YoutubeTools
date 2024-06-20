@@ -1,14 +1,17 @@
 #import ApiTools
 from tools import ApiTools
 from video import Video
-
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from dotenv import load_dotenv, find_dotenv
+import os
+load_dotenv()
 
 class Channel:
     def __init__(self, **kwargs):
         for attr in ('channel_id', 'channel_name', 'max_videos_num', 'search_word'):
             setattr(self, attr, kwargs.get(attr))
         self.video_list = []
-        self.api_tool = ApiTools('AIzaSyDd9M7_UZ314rPpRmlnA0P4p9G5Usz_Gh8')
+        self.api_tool = ApiTools(os.getenv("YT_API_KEY"))
         self.video_list_with_searchword = []
 
     def populate_video_list(self):
@@ -28,13 +31,18 @@ class Channel:
         self.video_list_with_searchword = []
         if self.search_word is None:
             print("no search word initialized for channel")
-        for video in self.video_list:
+
+        def process_video(video):
             video.populate_transcript()
             video.populate_word_occurrences(self.search_word)
+            return video
 
-            if video.get_num_occurrences() > 0:
-                self.video_list_with_searchword.append(video)
-
+        with ThreadPoolExecutor(max_workers=20) as executor:
+            futures = [executor.submit(process_video, video) for video in self.video_list]
+            for future in as_completed(futures):
+                video = future.result()
+                if video.get_num_occurrences() > 0:
+                    self.video_list_with_searchword.append(video)
 
     def get_occurrences(self):
         total_occurrences = []
