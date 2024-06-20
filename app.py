@@ -37,6 +37,11 @@ def index():
 def sphere_game():
     return render_template('sphere_game.html')
 
+@app.route('/sphere_game_a_star')
+def sphere_game_a_star():
+    return render_template('sphere_game_a_star.html')
+
+
 
 
 @app.route('/results', methods=['POST'])

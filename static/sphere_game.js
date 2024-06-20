@@ -29,7 +29,7 @@ function init() {
 
     // Soccer ball geometry
     const radius = 1;
-    const detail = 2;
+    const detail = 1;
     geometry = new THREE.IcosahedronBufferGeometry(radius, detail).toNonIndexed();
 
     // Material
@@ -62,7 +62,7 @@ function init() {
     light.position.set(5, 5, 5).normalize();
     scene.add(light);
 
-    const ambientLight = new THREE.AmbientLight(0x404040);
+    const ambientLight = new THREE.AmbientLight(0x404040,2);
     scene.add(ambientLight);
 
     // Select start and finish hexagons
@@ -266,5 +266,15 @@ function animate() {
     controls.update();
     renderer.render(scene, camera);
 }
+
+
+
+
+
+
+
+
+
+
 
 init();

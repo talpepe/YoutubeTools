@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Soccer Ball</title>
+    <style>
+        body {margin: 0; display: flex;}
+        canvas {display: block; flex-grow: 1;}
+        .sidebar {
+            width: 200px;
+            background-color: #f4f4f4;
+            padding: 10px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        .sidebar button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .sidebar button:hover {
+            background-color: #0056b3;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <button id="helpButton">Help</button>
+        <button id="clearButton">Clear</button>
+        <button id="resetButton">Reset</button>
+        <button id="pathButton">Find Path</button>
+        <button id="settingsButton">Settings</button>
+    </div>
+
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Settings</h2>
+            <label for="shape">Shape:</label>
+            <select id="shape">
+                <option value="icosahedron" selected>Icosahedron</option>
+                <option value="dodecahedron">Dodecahedron</option>
+                <option value="octahedron">Octahedron</option>
+                <option value="tetrahedron">Tetrahedron</option>
+            </select>
+            <br><br>
+            <label for="radius">Radius:</label>
+            <input type="range" id="radius" name="radius" min="1" max="3" step="1" value="1" oninput="this.nextElementSibling.value = this.value">
+            <output>1</output>
+            <br><br>
+            <label for="details">Details:</label>
+            <input type="range" id="details" name="details" min="1" max="5" step="1" value="1" oninput="this.nextElementSibling.value = this.value">
+            <output>1</output>
+            <br><br>
+            <button id="saveSettingsButton">Save and Apply</button>
+        </div>
+    </div>
+
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Explanation</h2>
+            <p>A green starting triangle and a red finish triangle are chosen randomly.</p>
+            <p>Spawn obstacles by clicking on triangles and turning them black.</p>
+            <p>When done creating obstacles, click the Find Path button.</p>
+            <p>If it exists, the shortest path will be highlighted by yellow triangles.</p>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='sphere_game_a_star.js')}}" type="module"></script>
+</body>
+</html>
