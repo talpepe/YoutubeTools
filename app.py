@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request, jsonify, session
 from flask_session import Session
-from channel import Channel
-from video import Video
+from chat import TwitchChannel, TwitchAPI, TwitchVOD
+import plotly.graph_objects as go
 import re
 import pickle
+from channel import Channel
+from video import Video
+
 
 app = Flask(__name__)
 
@@ -41,6 +44,55 @@ def sphere_game():
 def sphere_game_a_star():
     return render_template('sphere_game_a_star.html')
 
+@app.route('/twitch_analyzer_welcome')
+def twitch_analyzer():
+    api = TwitchAPI()
+    moonmoon_channel = TwitchChannel("moonmoon")
+    lirik_channel = TwitchChannel("lirik")
+    aceu_channel = TwitchChannel("aceu")
+    moonmoon_vods = moonmoon_channel.get_sample_vod_ids()
+    lirik_vods = lirik_channel.get_sample_vod_ids()
+    aceu_vods = aceu_channel.get_sample_vod_ids()
+    return render_template('twitch_analyzer_welcome.html', moonmoon_vods=moonmoon_vods, lirik_vods=lirik_vods, aceu_vods=aceu_vods)
+
+@app.route('/logged_channels')
+def logged_channels():
+    channels = TwitchChannel.get_logged_channels()
+    return channels
+
+@app.route('/twitch_analyzer_vod', methods=['POST'])
+def analyze_vod():
+    vod_id = request.form['vod_id']
+    api = TwitchAPI()
+    video = TwitchVOD(api.get_video_by_video_id(vod_id))
+    spikes = video.chat.activity_spikes
+
+    # Create Plotly bar chart
+    color_scale = 'Reds'
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        x=spikes.index,
+        y=spikes.values,
+        marker=dict(
+            color=spikes.values,
+            colorscale=color_scale,
+            colorbar=dict(title='Z-score')
+        )
+    ))
+    fig.update_layout(
+        title="Activity Spikes in VOD",
+        xaxis_title="Timestamp",
+        yaxis_title="Z-score",
+        dragmode=False
+    )
+    config = {
+        'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d'],
+        'displayModeBar': True
+    }
+
+    chart_html = fig.to_html(full_html=False, config=config)
+
+    return render_template('twitch_analyzer_vod.html', vod_id=vod_id, chart_html=chart_html)
 
 
 
@@ -103,4 +155,4 @@ def get_occurrences():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(debug=True)
