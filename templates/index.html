@@ -1,23 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index Page</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Tal Peperovits</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="{{ url_for('static', filename='vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+	<link href="{{ url_for('static', filename='vendor/devicons/css/devicons.min.css') }}" rel="stylesheet">
+	<link href="{{ url_for('static', filename='vendor/simple-line-icons/css/simple-line-icons.css') }}" rel="stylesheet">
+	
+	<link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+	
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/resume.min.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1 class="mt-5">Welcome to Tal's page</h1>
-        <div class="list-group mt-4">
-            <a href="{{ url_for('input_page') }}" class="list-group-item list-group-item-action">Youtube Channel Word Search</a>
-            <a href="{{ url_for('sphere_game') }}" class="list-group-item list-group-item-action">Sphere game</a>
-            <a href="{{ url_for('sphere_game_a_star') }}" class="list-group-item list-group-item-action">Sphere game with pathfinding</a>
-            <a href="{{ url_for('twitch_analyzer') }}" class="list-group-item list-group-item-action">Twitch VOD highlights</a>
+<body id="page-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">
+            <span class="d-block d-lg-none">My Portfolio</span>
+            <span class="d-none d-lg-block">
+                <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ url_for('static', filename='img/profile.jpg') }}" alt="">
+            </span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#experience">Experience</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#education">Education</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link js-scroll-trigger" href="#tal-tools">My Projects</a>
+                </li>
+            </ul>
         </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="container-fluid p-0">
+        <!-- About Section -->
+        <section class="resume-section p-3 p-lg-5 d-flex align-items-center" id="about">
+            <div class="w-100">
+                <h1 class="mb-0">
+                    TAL
+                    <span class="text-primary">PEPEROVITS</span>
+                </h1>
+                <div class="subheading mb-5">
+                    Software Developer ·  0545-874742 · <a href="mailto:talpeperovits@gmail.com">talpeperovits@gmail.com</a>
+                </div>
+                <p class="lead mb-5">Hello!<br><br>
+                I'm <b>Tal</b>, <b>a Software Developer</b> based in Israel.<br> Having been around computers since I was a baby, software development was an easy choice. <br><br>
+                I spent a lot of my formative years in the United States, growing up in Texas and Portland.<br>
+                    Since then I have moved back to Israel to be closer with friends and family.
+                </p>
+            </div>
+        </section>
+        <hr class="m-0">
+        <!-- Experience Section -->
+        <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="experience">
+            <div class="w-100">
+                <h2 class="mb-5">Experience</h2>
+                <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">Software Developer</h3>
+                        <div class="subheading mb-3">Finastra, FinTech Company</div>
+                        <p>Development and maintenance of full stack applications using microservices architecture, Docker, Git, Java, Spring, and SQL.</p>
+                        <p>Debugging and resolving complex technical issues for customers in Production.</p>
+                        <p>Development of backend to frontend features and integrating them into existing product codebase.</p>
+                        <p>Worked with cloud-based services, specifically Azure, to deploy and manage applications.</p>
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="text-primary">2021-Present</span>
+                    </div>
+                </div>
+                <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">Automation Developer</h3>
+                        <div class="subheading mb-3">Finastra, FinTech Company</div>
+                        <p>Developed and implemented automated testing solutions for complicated payment processing systems, using Java and Selenium framework.</p>
+                        <p>Directed and assisted analysis of software and business requirements, translating them into actionable test cases.</p>
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="text-primary">2021-Present</span>
+                    </div>
+                </div>
+                <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">Embedded Software Engineer</h3>
+                        <div class="subheading mb-3">Ottofence, Automotive Cyber Security Company</div>
+                        <p>Development of an automotive hardware Firewall product.</p>
+                        <p>Maintenance, debugging, and development of software in C and C++.</p>
+                        <p>Close and extensive work with the CAN-bus protocol.</p>
+                        <p>Development and maintenance of Free-RTOS systems.</p>
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="text-primary">2019-2020</span>
+                    </div>
+                </div>
+                <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">Frontline Support Engineer</h3>
+                        <div class="subheading mb-3">Finastra, FinTech Company</div>
+                        <p>Classifying and handling of high impact production issues.</p>
+                        <p>Triage and debugging of live production traces.</p>
+                        <p>Helped develop a tool to match nameless payments to real customers, using identifying metrics and Google API.</p>
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="text-primary">2017-2019</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="m-0">
+        <!-- Education Section -->
+        <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="education">
+            <div class="w-100">
+                <h2 class="mb-5">Education</h2>
+                <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">B.Sc in Computer Engineering</h3>
+                        <div class="subheading mb-3">Ruppin Academic Center</div>
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="text-primary">2013-2018</span>
+                    </div>
+                </div>
+                <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">Computer Science Student</h3>
+                        <div class="subheading mb-3">Portland College in Oregon, USA</div>
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="text-primary">2010-2012</span>
+                    </div>
+                </div>
+                <div class="resume-item d-flex flex-column flex-md-row justify-content-between mb-5">
+                    <div class="resume-content">
+                        <h3 class="mb-0">Plano Senior High in Texas, USA</h3>
+                    </div>
+                    <div class="resume-date text-md-right">
+                        <span class="text-primary">2008-2010</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="m-0">
+        <section class="py-5" id="tal-tools">
+                <div class="container px-7 mb-5">
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Tal's Tools</span></h1>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-11 col-xl-9 col-xxl-8">
+                            <!-- Project Card 1-->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5" >
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <a href="https://github.com/talpepe/DaDTool" style="text-decoration:none;" target="_blank" rel="noopener noreferrer">
+                                                <h2 class="fw-bolder">Dark and Darker Map Tool</h2>
+                                            </a>
+                                            <p>My favorite project! This tool is very handy for people that play Dark and Darker. It's a dungeon crawler game that doesn't show you the entire map, only the portion of the map you're currently on.<br><br>
+                                            If you're a new player, it's hard to orient yourself and find where you're at in relation to the entire map. So, this tool helps with that.<br><br>
+                                            It continuously scans your minimap and uses openCV feature matching to match where you are on the big map and places you there with a big ol' red square.<br><br>
+                                            Use the options to set the maps overlay opacity, whether it should always show on top, and minimap scanning interval.<br><br>
+                                            I worked very hard on optimizing CPU usage and I'm very happy with how it turned out.
+                                            </p>
+                                        </div>
+                                        <img class="img-fluid" src="{{ url_for('static', filename='img/dadtool.png') }}" href="{{ url_for('input_page') }}" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <a href="{{ url_for('input_page') }}" style="text-decoration:none;" target="_blank" rel="noopener noreferrer">
+                                                <h2 class="fw-bolder">Youtube Word Search</h2>
+                                            </a>
+                                            <p>Looking for a specific word used in a youtube video? Need to look up every time a creator said the word "Potato" in his lifetime?
+                                                This tool allows you to do just that. <br><br>
+                                            Enter the Youtube handle,
+                                                enter number of videos to search through, and the search keyword. A list of videos will show with the word occurrences!  </p>
+                                        </div>
+                                        <img class="img-fluid" src="{{ url_for('static', filename='img/youtube.png') }}" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <a href="{{ url_for('twitch_analyzer') }}" style="text-decoration:none;" target="_blank" rel="noopener noreferrer">
+                                                <h2 class="fw-bolder">Twitch VOD Highlights</h2>
+                                            </a>
+                                            <p>I created this tool for us that don't have all the time to watch Twitch streams. Have a favorite content creator but want to only watch a streams highlights? This tool allows you to do that. <br><br>
+                                            The tool uses the channel's chat log to calculate spikes of messaging activity (z-scores). The idea being - if something exciting happened, people are sending more messages to chat about it.<br><br>
+                                            The spikes are then displayed on a plotly graph beneath the vod. Click on a bar in the bar graph to skip to that timestamp in the VOD.<br><br>
+                                            The chat is not available through Twitch API so it has to be sourced from a chat logging site and matched with the VOD id, start and end time, etc.</p>
+                                        </div>
+                                        <img class="img-fluid" src="{{ url_for('static', filename='img/twitch.png') }}" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <a href="{{ url_for('sphere_game') }}" style="text-decoration:none;" target="_blank" rel="noopener noreferrer">
+                                                <h2 class="fw-bolder">Sphere Game</h2>
+                                            </a>
+                                            <p>Demonstration of javascript's three.js library. Small game that creates a geomteric shape made of triangles (icosahedron). <br><br>
+                                            Create a path from the starting triangle to the finish triangle to win!</p>
+                                        </div>
+                                        <img class="img-fluid" src="{{ url_for('static', filename='img/sphere.png') }}" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="d-flex align-items-center">
+                                        <div class="p-5">
+                                            <a href="{{ url_for('sphere_game_a_star') }}" style="text-decoration:none;" target="_blank" rel="noopener noreferrer">
+                                                <h2 class="fw-bolder">Sphere Game With Pathfinding</h2>
+                                            </a>
+                                            <p>Similar to the sphere game but more fleshed out with more features. <br><br>
+                                            This time, let the computer do the hard work. Click on the find path button on the left and an A* pathfinding script will find the shortest path for you. <br><br>
+                                            You can make it harder as well. Click on the triangles to turn them inaccessible - creating a path obstacle.  The algorithm will find the shortest path around them.<br><br>
+                                            There are additional options in the settings menu. Change the geometric shape, add more vertices, or increase the shape's radius.</p>
+                                        </div>
+                                        <img class="img-fluid" src="{{ url_for('static', filename='img/sphere_a_star.png') }}" alt="..." />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="{{ url_for('static', filename='vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="{{ url_for('static', filename='resume.min.js') }}"></script>
 </body>
 </html>
