@@ -50,24 +50,26 @@ class ApiTools:
         )
         ch_response = ch_request.execute()
         uploads_playlist_id = ch_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+        try:
+            while len(video_ids) < max_results:
+                test_counter = test_counter+1
+                playlist_response = self.youtube.playlistItems().list(
+                    part='contentDetails',
+                    playlistId=uploads_playlist_id,
+                    maxResults=max_results,
+                    pageToken=next_page_token
+                ).execute()
 
-        while len(video_ids) < max_results:
-            test_counter = test_counter+1
-            playlist_response = self.youtube.playlistItems().list(
-                part='contentDetails',
-                playlistId=uploads_playlist_id,
-                maxResults=max_results,
-                pageToken=next_page_token
-            ).execute()
+                for item in playlist_response['items']:
+                    video_ids.append(item['contentDetails']['videoId'])
+                next_page_token = playlist_response.get('nextPageToken')
+                print("counter:", test_counter, "token", next_page_token)
+                print(playlist_response)
 
-            for item in playlist_response['items']:
-                video_ids.append(item['contentDetails']['videoId'])
-            next_page_token = playlist_response.get('nextPageToken')
-            print("counter:", test_counter, "token", next_page_token)
-            print(playlist_response)
-
-            if not next_page_token:
-                break
+                if not next_page_token:
+                    break
+        except:
+            return video_ids
         return video_ids
 
     @staticmethod

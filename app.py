@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify, session
+from flask import Flask, render_template, request, jsonify, session, flash, redirect, url_for
 from flask_session import Session
 from chat import TwitchChannel, TwitchAPI, TwitchVOD
 import plotly.graph_objects as go
@@ -62,39 +62,41 @@ def logged_channels():
 
 @app.route('/twitch_analyzer_vod', methods=['POST'])
 def analyze_vod():
-    vod_id = request.form['vod_id']
-    api = TwitchAPI()
-    video = TwitchVOD(api.get_video_by_video_id(vod_id))
-    spikes = video.chat.activity_spikes
+    try:
+        vod_id = request.form['vod_id']
+        api = TwitchAPI()
+        video = TwitchVOD(api.get_video_by_video_id(vod_id))
+        spikes = video.chat.activity_spikes
 
-    # Create Plotly bar chart
-    color_scale = 'Reds'
-    fig = go.Figure()
-    fig.add_trace(go.Bar(
-        x=spikes.index,
-        y=spikes.values,
-        marker=dict(
-            color=spikes.values,
-            colorscale=color_scale,
-            colorbar=dict(title='Z-score')
+        # Create Plotly bar chart
+        color_scale = 'Reds'
+        fig = go.Figure()
+        fig.add_trace(go.Bar(
+            x=spikes.index,
+            y=spikes.values,
+            marker=dict(
+                color=spikes.values,
+                colorscale=color_scale,
+                colorbar=dict(title='Z-score')
+            )
+        ))
+        fig.update_layout(
+            title="Activity Spikes in VOD",
+            xaxis_title="Timestamp",
+            yaxis_title="Z-score",
+            dragmode=False
         )
-    ))
-    fig.update_layout(
-        title="Activity Spikes in VOD",
-        xaxis_title="Timestamp",
-        yaxis_title="Z-score",
-        dragmode=False
-    )
-    config = {
-        'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d'],
-        'displayModeBar': True
-    }
+        config = {
+            'modeBarButtonsToRemove': ['zoom2d', 'pan2d', 'select2d', 'lasso2d', 'zoomIn2d', 'zoomOut2d', 'autoScale2d', 'resetScale2d'],
+            'displayModeBar': True
+        }
 
-    chart_html = fig.to_html(full_html=False, config=config)
+        chart_html = fig.to_html(full_html=False, config=config)
 
-    return render_template('twitch_analyzer_vod.html', vod_id=vod_id, chart_html=chart_html)
-
-
+        return render_template('twitch_analyzer_vod.html', vod_id=vod_id, chart_html=chart_html)
+    except IndexError:
+        flash('VOD not found. Please enter a valid VOD ID.', 'danger')
+        return redirect(url_for('twitch_analyzer'))
 
 @app.route('/results', methods=['POST'])
 def results_page():
