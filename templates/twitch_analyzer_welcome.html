@@ -21,7 +21,7 @@
         <form action="{{ url_for('analyze_vod') }}" method="post" class="mt-4">
             <div class="form-group">
                 <label for="vod_id">Enter Twitch VOD ID:</label>
-                <input type="text" class="form-control" id="vod_id" name="vod_id" required>
+                <input type="text" class="form-control" id="vod_id" name="vod_id" required pattern="^[1-9][0-9]*$" title="Please enter a positive integer">
             </div>
             <div class="form-group">
                 <label>Sample VOD IDs:</label>
