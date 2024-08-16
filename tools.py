@@ -1,5 +1,6 @@
 import re
 import string
+import traceback
 
 from googleapiclient.discovery import build
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -80,7 +81,12 @@ class ApiTools:
         transcript = ""
         try:
             transcript = YouTubeTranscriptApi.get_transcript(video_id)
+            with open("transcript2.txt", "w") as file:
+                for line in transcript:
+                    file.write("%s\n" % line)
         except:
+            with open("transcript3.txt", "w") as file:
+                file.write(traceback.print_exc())
             print("Oops!  That was no valid number.  Try again...")
         return transcript
 
