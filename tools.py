@@ -47,8 +47,8 @@ class ApiTools:
             forHandle=channel_name,
             maxResults=max_results
         )
-        with open("vidlistRequest.txt", "w") as file:
-                file.write(ch_request)
+        with open("url.txt", "w") as file:
+                file.write(ch_request.uri)
         ch_response = ch_request.execute()
         uploads_playlist_id = ch_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
         with open("vidlistRequest.txt", "w") as file:
