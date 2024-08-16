@@ -44,10 +44,6 @@ class Channel:
                 if video.get_num_occurrences() > 0:
                     self.video_list_with_searchword.append(video)
 
-        with open("searchwordvids.txt", "w") as file:
-            for line in self.video_list_with_searchword:
-                file.write("%s\n" % line.video_id)
-                file.write("%s\n" % line.search_results[0])
 
 
     def get_occurrences(self):

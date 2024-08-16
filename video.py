@@ -17,9 +17,6 @@ class Video:
 
     def populate_transcript(self):
         self.transcript = ApiTools.get_transcript_from_video_id(self.video_id)
-        with open("transcript.txt", "w") as file:
-            for line in self.transcript:
-                file.write("%s\n" % line)
 
 
     def populate_word_occurrences(self, word):

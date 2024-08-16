@@ -48,12 +48,10 @@ class ApiTools:
             forHandle=channel_name,
             maxResults=max_results
         )
-        with open("url.txt", "w") as file:
-                file.write(ch_request.uri)
+
         ch_response = ch_request.execute()
         uploads_playlist_id = ch_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-        with open("vidlistRequest.txt", "w") as file:
-                file.write(uploads_playlist_id)
+
         try:
             while len(video_ids) < max_results:
                 playlist_response = self.youtube.playlistItems().list(
@@ -71,24 +69,18 @@ class ApiTools:
                     break
         except:
             return video_ids
-        with open("vidids.txt", "w") as file:
-            for line in video_ids:
-                file.write("%s\n" % line)
         return video_ids
 
     @staticmethod
     def get_transcript_from_video_id(video_id):
         transcript = ""
         try:
-            transcript = YouTubeTranscriptApi.get_transcript(video_id)
-            with open("transcript2.txt", "w") as file:
-                for line in transcript:
-                    file.write("%s\n" % line)
+            transcript = YouTubeTranscriptApi.get_transcript(video_id, proxies={"https": "socks5h://ypeoomnw:4adv2noq2dzt@173.0.9.70:5653"})
+
         except Exception as e:
-            with open("transcript3.txt", "w") as file:
+            with open("TranscriptException.txt", "w") as file:
                 file.write(str(e))
                 file.write(traceback.format_exc())
-            print("Oops!  That was no valid number.  Try again...")
         return transcript
 
     @staticmethod

@@ -123,8 +123,7 @@ def results_page():
 
         channel = Channel(channel_id=channel_id, channel_name=channel_name, max_videos_num=num_videos,
                           search_word=search_word)
-        with open("channel.txt", "w") as file:
-                file.write(channel_name + "\n")
+
 
         channel.populate_video_list()
         channel.search_for_word()
@@ -136,9 +135,7 @@ def results_page():
 
     thumbnails = [{'url': f"https://img.youtube.com/vi/{video.video_id}/0.jpg", 'video_id': video.video_id} for video in
                   filtered_videos]
-    with open("copy.txt", "w") as file:
-        for video in filtered_videos:
-            file.write(video.video_id + "\n")
+
 
     return render_template('results.html', thumbnails=thumbnails)
 
