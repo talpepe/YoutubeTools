@@ -134,6 +134,9 @@ def results_page():
 
     thumbnails = [{'url': f"https://img.youtube.com/vi/{video.video_id}/0.jpg", 'video_id': video.video_id} for video in
                   filtered_videos]
+    with open("copy.txt", "w") as file:
+        for video in filtered_videos:
+            file.write(video.video_id + "\n")
 
     return render_template('results.html', thumbnails=thumbnails)
 
