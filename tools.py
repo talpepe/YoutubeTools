@@ -75,7 +75,7 @@ class ApiTools:
     def get_transcript_from_video_id(video_id):
         transcript = ""
         try:
-            transcript = YouTubeTranscriptApi.get_transcript(video_id, proxies={"http": "http://abb9e586d4fe28f84671:be19e93541e5db52@gw.dataimpulse.com:823"})
+            transcript = YouTubeTranscriptApi.get_transcript(video_id, proxies={"https": "https://abb9e586d4fe28f84671:be19e93541e5db52@gw.dataimpulse.com:823"})
 
         except Exception as e:
             with open("TranscriptException.txt", "w") as file:
