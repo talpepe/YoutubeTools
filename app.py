@@ -6,10 +6,10 @@ import re
 import pickle
 from channel import Channel
 from video import Video
-
+from flask_cors import CORS
 
 app = Flask(__name__)
-
+CORS(app)
 # Configure the session to use filesystem (instead of signed cookies)
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = 'supersecretkey'
