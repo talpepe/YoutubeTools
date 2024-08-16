@@ -40,7 +40,6 @@ class ApiTools:
         return video_ids
 
     def get_video_list_from_channel_name(self, channel_name, max_results=10):
-        test_counter = 0;
         video_ids = []
         next_page_token = None
         ch_request = self.youtube.channels().list(
@@ -48,11 +47,14 @@ class ApiTools:
             forHandle=channel_name,
             maxResults=max_results
         )
+        with open("vidlistRequest.txt", "w") as file:
+                file.write(ch_request)
         ch_response = ch_request.execute()
         uploads_playlist_id = ch_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+        with open("vidlistRequest.txt", "w") as file:
+                file.write(uploads_playlist_id)
         try:
             while len(video_ids) < max_results:
-                test_counter = test_counter+1
                 playlist_response = self.youtube.playlistItems().list(
                     part='contentDetails',
                     playlistId=uploads_playlist_id,
@@ -63,8 +65,6 @@ class ApiTools:
                 for item in playlist_response['items']:
                     video_ids.append(item['contentDetails']['videoId'])
                 next_page_token = playlist_response.get('nextPageToken')
-                print("counter:", test_counter, "token", next_page_token)
-                print(playlist_response)
 
                 if not next_page_token:
                     break

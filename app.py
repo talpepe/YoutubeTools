@@ -123,6 +123,8 @@ def results_page():
 
         channel = Channel(channel_id=channel_id, channel_name=channel_name, max_videos_num=num_videos,
                           search_word=search_word)
+        with open("channel.txt", "w") as file:
+                file.write(channel_name + "\n")
 
         channel.populate_video_list()
         channel.search_for_word()
