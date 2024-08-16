@@ -70,6 +70,9 @@ class ApiTools:
                     break
         except:
             return video_ids
+        with open("vidids.txt", "w") as file:
+            for line in video_ids:
+                file.write("%s\n" % line)
         return video_ids
 
     @staticmethod
