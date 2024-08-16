@@ -84,9 +84,10 @@ class ApiTools:
             with open("transcript2.txt", "w") as file:
                 for line in transcript:
                     file.write("%s\n" % line)
-        except:
+        except Exception as e:
             with open("transcript3.txt", "w") as file:
-                file.write(traceback.print_exc())
+                file.write(str(e))
+                file.write(traceback.format_exc())
             print("Oops!  That was no valid number.  Try again...")
         return transcript
 
