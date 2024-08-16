@@ -37,7 +37,7 @@ class Channel:
             video.populate_word_occurrences(self.search_word)
             return video
 
-        with ThreadPoolExecutor(max_workers=20) as executor:
+        with ThreadPoolExecutor(max_workers=5) as executor:
             futures = [executor.submit(process_video, video) for video in self.video_list]
             for future in as_completed(futures):
                 video = future.result()
