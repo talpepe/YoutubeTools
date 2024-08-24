@@ -1,3 +1,4 @@
+import os
 import re
 import string
 import traceback
@@ -75,7 +76,7 @@ class ApiTools:
     def get_transcript_from_video_id(video_id):
         transcript = ""
         try:
-            transcript = YouTubeTranscriptApi.get_transcript(video_id, proxies={"https": "http://abb9e586d4fe28f84671:be19e93541e5db52@gw.dataimpulse.com:10000"})
+            transcript = YouTubeTranscriptApi.get_transcript(video_id, proxies={"https": os.getenv("PROXY")})
 
         except Exception as e:
             with open("TranscriptException.txt", "w") as file:
