@@ -1,3 +1,5 @@
+from logging.handlers import RotatingFileHandler
+
 from flask import Flask, render_template, request, jsonify, session, flash, redirect, url_for
 from flask_session import Session
 from chat import TwitchChannel, TwitchAPI, TwitchVOD
@@ -6,7 +8,7 @@ import re
 import pickle
 from channel import Channel
 from video import Video
-
+import logging
 
 app = Flask(__name__)
 
@@ -15,6 +17,25 @@ app.config['SESSION_TYPE'] = 'filesystem'
 app.config['SECRET_KEY'] = 'supersecretkey'
 Session(app)
 
+# Set up logging
+log_file = 'app_startup.log'
+log_level = logging.DEBUG
+
+# Create a rotating file handler
+handler = RotatingFileHandler(log_file, maxBytes=10000, backupCount=3)
+handler.setLevel(log_level)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+# Add handler to both app logger and root logger
+app.logger.addHandler(handler)
+logging.getLogger().addHandler(handler)
+
+# Set the logger level explicitly
+app.logger.setLevel(log_level)
+
+# Log application startup
+app.logger.info('Flask application is starting...')
 
 def is_youtube_url(url):
     youtube_regex = re.compile(
@@ -159,4 +180,5 @@ def get_occurrences():
 
 
 if __name__ == '__main__':
+    app.logger.debug('Starting Flask application...')
     app.run(host='0.0.0.0')
