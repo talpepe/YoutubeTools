@@ -181,4 +181,5 @@ def get_occurrences():
 
 if __name__ == '__main__':
     app.logger.debug('Starting Flask application...')
+    app.logger.info('Starting Flask application...')
     app.run(host='0.0.0.0')
