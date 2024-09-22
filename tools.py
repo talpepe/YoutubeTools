@@ -51,8 +51,10 @@ class ApiTools:
         )
 
         ch_response = ch_request.execute()
-        uploads_playlist_id = ch_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-
+        try:
+            uploads_playlist_id = ch_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
+        except:
+            return video_ids
         try:
             while len(video_ids) < max_results:
                 playlist_response = self.youtube.playlistItems().list(
